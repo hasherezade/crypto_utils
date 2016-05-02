@@ -16,12 +16,20 @@ def decode(data, key, offset):
 def main():
     parser = argparse.ArgumentParser(description="Data XOR")
     parser.add_argument('--file', dest="file", default=None, help="Input file", required=True)
-    parser.add_argument('--key', dest="key", default=None, help="Value with which to XOR", required=True)
+    parser.add_argument('--key', dest="key", default=None, help="Value with which to XOR")
+    parser.add_argument('--keyfile', dest="keyfile", default=None, help="File with which to XOR")
     parser.add_argument('--offset',dest="offset", default=0,type=int, help="Offset in file from which XOR should start")
     args = parser.parse_args()
 
+
     data = bytearray(open(args.file, 'rb').read())
-    key = bytearray(args.key)
+    if (args.key == None and args.keyfile == None):
+        print "Supply key or keyfile"
+        exit (-1)
+    if args.keyfile:
+        key = bytearray(open(args.keyfile, 'rb').read())
+    else:
+        key = bytearray(args.key)
     offset = args.offset
     
     print decode(data, key, offset)
