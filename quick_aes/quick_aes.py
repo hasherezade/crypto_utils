@@ -66,9 +66,7 @@ def save_raw_bytes(filename, data):
 
 def make_outfile_name(filename, isDecode, sufix):
     basename = os.path.basename(filename)
-    print basename
     dirname = os.path.dirname(filename)
-    print dirname
     prefix = "enc_"
     if isDecode:
         prefix = "dec_"
