@@ -65,14 +65,16 @@ def save_raw_bytes(filename, data):
     fo.close()
 
 def make_outfile_name(filename, isDecode, sufix):
+    basename = os.path.basename(filename)
+    print basename
+    dirname = os.path.dirname(filename)
+    print dirname
     prefix = "enc_"
     if isDecode:
         prefix = "dec_"
-    try:
-        dot_indx = filename.index('.')
-    except:
-        dot_indx = len(filename)
-    return prefix + filename[:dot_indx] + "."+ sufix
+    basename = prefix + basename
+    out_name = os.path.join(dirname, basename)
+    return out_name
 
 def main():
     parser = argparse.ArgumentParser(description="AES Encoder/Decoder")
