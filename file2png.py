@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2.7
 """file2png.py: Visualise raw bytes of any given file and saves as a PNG"""
 
 __author__ = 'hasherezade'
