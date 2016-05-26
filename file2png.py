@@ -97,25 +97,26 @@ def get_encoded_data(imgname):
 
 def save_decoded(decdata, outfile):
     fr = open(outfile, "wb")
+    if fr is None:
+        return False
     for a in decdata:
         fr.write('%c' % a)
     fr.close()
+    return True
 
-def make_prefixed_name(name, prefix):
-    index = name.rfind('/')
-    if index == -1:
-        index = name.rfind('\\')
-    if index == -1:
-        return prefix + name # simple append
-    return name[:index+1]+prefix+name[index+1:]
+def make_prefixed_name(filename, prefix):
+    basename = os.path.basename(filename)
+    dirname = os.path.dirname(filename)
+
+    basename = prefix + basename
+    out_name = os.path.join(dirname, basename)
+    print out_name
+    return out_name
 
 def make_outfile_name(filename, suffix, prefix):
-    filename = make_prefixed_name(filename, prefix)
-    try:
-        dot_indx = filename.index('.')
-    except:
-        dot_indx = len(filename)
-    return filename[:dot_indx] + "."+ suffix
+    filename = make_prefixed_name(filename, prefix) + "."+ suffix
+    print "out_name: " + filename
+    return filename
 
 def main():
     parser = argparse.ArgumentParser(description="Bytes visualiser")
@@ -148,8 +149,11 @@ def main():
     else:
         tsdata = get_encoded_data(filename)
         decdata = decode(tsdata)
-        print "decoded %d\n" % len(decdata)
-        save_decoded(decdata, outfile)
+        print "[+] Decoded: %d bytes" % len(decdata)
+        if save_decoded(decdata, outfile):
+            print "[+] Saved to: " + outfile
+        else:
+            print "[-] Error: cannot write to file: " + outfile
 
 if __name__ == "__main__":
     main()
