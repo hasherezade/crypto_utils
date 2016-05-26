@@ -64,13 +64,17 @@ def save_raw_bytes(filename, data):
     fo.write(data)
     fo.close()
 
-def make_outfile_name(filename, isDecode, sufix):
+def make_outfile_name(filename, isDecode, suffix):
     basename = os.path.basename(filename)
     dirname = os.path.dirname(filename)
     prefix = "enc_"
     if isDecode:
         prefix = "dec_"
     basename = prefix + basename
+    if suffix :
+        if not suffix.startswith('.'):
+            suffix = "." + suffix
+        basename = basename + suffix
     out_name = os.path.join(dirname, basename)
     return out_name
 
