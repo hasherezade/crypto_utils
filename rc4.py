@@ -35,7 +35,7 @@ def save_raw_bytes(filename, data):
     fo.close()
 
 def main():
-    parser = argparse.ArgumentParser(description="AES CBC Encoder/Decoder")
+    parser = argparse.ArgumentParser(description="RC4 Encoder/Decoder")
     parser.add_argument('--infile', dest="infile", default=None, help="Input file")
     parser.add_argument('--outfile', dest="outfile", default="out.tmp", help="Output file")
     parser.add_argument('--key', dest="key", default="test", help="Key")
