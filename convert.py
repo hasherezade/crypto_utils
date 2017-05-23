@@ -1,5 +1,5 @@
 #!/usr/bin/env python2.7
-"""convert.py: Fetches bytes represented as ASCII numbers - hex or dec and converts them to binary"""
+"""convert.py: Fetches bytes represented as ASCII strings (hexadecimal, decimal, binary) and converts them into raw binary"""
 
 __author__ = 'hasherezade'
 __license__ = "GPL"
