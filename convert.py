@@ -11,33 +11,38 @@ import argparse
 
 HEX_BYTE = r'[0-9a-fA-F]{2}\s'
 DEC_BYTE = r'[0-9]{1,3}\s'
+BIN_BYTE = r'[0-1]{8}\s'
 
 def chunks(s, n):
     for start in range(0, len(s), n):
         yield s[start:start+n]
 
-def fetch_chunks(buf, is_dec, is_cont):
+def fetch_chunks(buf, base, is_cont):
     pattern = HEX_BYTE
-    if is_dec:
+    chunk_len = 2
+    if base == 10:
         pattern = DEC_BYTE
+        chunk_len = 3
+    elif base == 2:
+        pattern = BIN_BYTE
+        chunk_len = 8
 
     if is_cont == False:
         return re.findall (pattern, buf)
     t = []
-    chunk_len = 2
-    if is_dec:
-       chunk_len = 3
     for chunk in chunks(buf, chunk_len):
        t.append(chunk)
     return t
 
 
-def convert_chunks(buf, is_dec, is_cont):
+def convert_chunks(buf, base_id, is_cont):
     base = 16
-    if is_dec:
+    if base_id == 'd':
         base = 10
+    elif base_id == 'b':
+        base = 2
     buf = buf.strip()
-    t = fetch_chunks(buf, is_dec, is_cont)
+    t = fetch_chunks(buf, base, is_cont)
     byte_buf = []
     for chunk in t:
         num = int (chunk, base)
@@ -49,7 +54,7 @@ def main():
     parser.add_argument('--infile', dest="infile", default=None, help="Input file", required=True)
     parser.add_argument('--outfile', dest="outfile", default="out.tmp", help="Output file")
     parser.add_argument('--is_cont', dest="is_cont", default=False, help="Is it a continuous string? (if False: delimiter separated)", action='store_true')
-    parser.add_argument('--is_dec', dest="is_dec", default=False, help="Is byte represented by a decimal numer? (If False: hexadecimal)", action='store_true')
+    parser.add_argument('--base', dest="base_id", default='h', help="Number base. Supported: b - binary, d - decimal, h -hexadecimal.", required=True)
     args = parser.parse_args()
 
     in_fileName = args.infile
@@ -57,7 +62,7 @@ def main():
     byte_buf = None
     with open(in_fileName, "r") as fileIn:
         buf = fileIn.read()
-        byte_buf = convert_chunks(buf, args.is_dec, args.is_cont)
+        byte_buf = convert_chunks(buf, args.base_id, args.is_cont)
     
     if len(byte_buf) == 0:
         print "Parsing error"
