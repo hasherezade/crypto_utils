@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2.7
 """convert.py: Fetches bytes represented as ASCII numbers - hex or dec and converts them to binary"""
 
 __author__ = 'hasherezade'
