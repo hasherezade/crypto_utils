@@ -1,13 +1,10 @@
 quick_aes
---
+-
+
+
 This tiny tool is meant to provide fast AES encryption of strings and files.
 It can be used in cases when you don't want to send message via open text but you have no time to prepare more sophiasticated encryption methods (GPG etc).
-<br/><br/>
-DISCLAIMER: <br/>
-This tools is provided AS IS and I am not responsible for any consequences of using it. If you notice any bug, please let me know and it will be fixed ASAP.
-<br/>
-This tool is intended to be minimalistic. It does not provide a secure way of sharing AES keys, only provides AES encryption. It is your reponsibility to share your key securely with the second party.
-<br/>
+
 How to use:
 -
 1) To encrypt a message:
