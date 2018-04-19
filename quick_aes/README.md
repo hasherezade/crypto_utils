@@ -1,8 +1,7 @@
 quick_aes
--
+---
 
-
-This tiny tool is meant to provide fast AES encryption of strings and files.
+This tiny utility is meant to provide fast AES encryption of strings and files.
 It can be used in cases when you don't want to send message via open text but you have no time to prepare more sophiasticated encryption methods (GPG etc).
 
 How to use:
