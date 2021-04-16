@@ -1,4 +1,4 @@
-#!/usr/bin/python2.7
+#!/usr/bin/python3
 
 import argparse
 
@@ -17,8 +17,8 @@ def save_decoded(decdata, outfile):
     fr = open(outfile, "wb")
     if fr is None:
         return False
-    for a in decdata:
-        fr.write('%c' % a)
+    fr.write(bytes(decdata))
+
     fr.close()
     return True
 
@@ -34,7 +34,7 @@ def main():
 
     data = bytearray(open(args.file, 'rb').read())
     if (args.key == None and args.keyfile == None):
-        print "Supply key or keyfile"
+        print("Supply key or keyfile")
         exit (-1)
     if args.keyfile:
         key = bytearray(open(args.keyfile, 'rb').read())
@@ -45,8 +45,9 @@ def main():
     decdata = decode(data, key, offset)
     save_decoded(decdata, args.outfile)
 
-    print "Saved to: "+ args.outfile
+    print("Saved to: "+ args.outfile)
 
 
 if __name__ == "__main__":
     main()
+    
