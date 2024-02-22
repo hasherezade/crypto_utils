@@ -39,7 +39,7 @@ def main():
     if args.keyfile:
         key = bytearray(open(args.keyfile, 'rb').read())
     else:
-        key = bytearray(args.key)
+        key = bytearray(args.key, 'utf-8')
     offset = args.offset
 
     decdata = decode(data, key, offset)
