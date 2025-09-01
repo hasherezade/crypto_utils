@@ -4,7 +4,7 @@ import os
 import argparse
 
 def RC4(key, data):
-    S = list(range(256))  # In Python 3, `range()` returns an iterator, so we use `list()`
+    S = list(range(256))
     j = 0
     out = bytearray()
 
