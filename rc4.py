@@ -1,38 +1,36 @@
-#!/usr/bin/env python2.7
+#!/usr/bin/env python3
 import sys
 import os
 import argparse
 
 def RC4(key, data):
-    S = range(256)
+    S = list(range(256))  # In Python 3, `range()` returns an iterator, so we use `list()`
     j = 0
     out = bytearray()
 
-    #KSA Phase
+    # KSA Phase
     for i in range(256):
-        j = (j + S[i] + ord( key[i % len(key)] )) % 256
-        S[i] , S[j] = S[j] , S[i]
+        j = (j + S[i] + ord(key[i % len(key)])) % 256
+        S[i], S[j] = S[j], S[i]
 
-    #PRGA Phase
+    # PRGA Phase
     i = j = 0
     for char in data:
-        i = ( i + 1 ) % 256
-        j = ( j + S[i] ) % 256
-        S[i] , S[j] = S[j] , S[i]
-        out.append(chr(ord(char) ^ S[(S[i] + S[j]) % 256]))
+        i = (i + 1) % 256
+        j = (j + S[i]) % 256
+        S[i], S[j] = S[j], S[i]
+        out.append(char ^ S[(S[i] + S[j]) % 256])
     return out
 
 def get_raw_bytes(filename, offset=0):
-    fo = open(filename,"rb")
-    fo.seek(offset, 0)
-    data = fo.read()
-    fo.close()
+    with open(filename, "rb") as fo:
+        fo.seek(offset, 0)
+        data = fo.read()
     return data
 
 def save_raw_bytes(filename, data):
-    fo = open(filename,"wb")
-    fo.write(data)
-    fo.close()
+    with open(filename, "wb") as fo:
+        fo.write(data)
 
 def main():
     parser = argparse.ArgumentParser(description="RC4 Encoder/Decoder")
@@ -45,19 +43,20 @@ def main():
     raw = None
 
     if args.infile is None:
-        #read message from stdin:
-        print "Enter a message:"
-        raw = raw_input()
+        # Read message from stdin
+        print("Enter a message:")
+        raw = input()  # `raw_input()` was replaced with `input()` in Python 3
     else:
         filename = args.infile
         raw = get_raw_bytes(filename)
-    print "Data length: ", len(raw)
+    
+    print("Data length:", len(raw))
 
     output = RC4(key, raw)
 
     save_raw_bytes(args.outfile, output)
-    print "Output saved to: " + args.outfile
+    print("Output saved to:", args.outfile)
 
 if __name__ == "__main__":
     main()
-
+    
